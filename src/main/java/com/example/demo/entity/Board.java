@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import com.example.demo.dto.BoradDto;
 import lombok.*;
-
 import javax.persistence.*;
 
 @Entity
