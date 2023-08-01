@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.BoradDto;
+import com.example.demo.dto.BoardDto;
 import com.example.demo.entity.Board;
 import com.example.demo.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +16,14 @@ import java.util.List;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public Board saveBoard(BoradDto boradDto) {
-        return boardRepository.save(Board.createBoard(boradDto));
+    public Board saveBoard(BoardDto boardDto) {
+        return boardRepository.save(Board.createBoard(boardDto));
     }
 
-    public List<BoradDto> getBoardList() {
-        List<BoradDto> boardDtos = new ArrayList<>();   // 앞에 제네릭 타입 명시 했으면 뒤에는 생략 가능
+    public List<BoardDto> getBoardList() {
+        List<BoardDto> boardDtos = new ArrayList<>();   // 앞에 제네릭 타입 명시 했으면 뒤에는 생략 가능
         for(Board board : boardRepository.findAll()) {
-            boardDtos.add(BoradDto.of(board));
+            boardDtos.add(BoardDto.of(board));
         }
         return boardDtos;
     }
