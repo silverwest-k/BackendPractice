@@ -6,6 +6,7 @@ import com.example.demo.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +27,11 @@ public class BoardService {
             boardDtos.add(BoardDto.of(board));
         }
         return boardDtos;
+    }
+
+    public BoardDto showDetail(Long boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(EntityExistsException::new);
+        return BoardDto.of(board);
     }
 }

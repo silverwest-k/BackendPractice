@@ -5,9 +5,13 @@ import com.example.demo.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value = "/board")
@@ -29,9 +33,17 @@ public class BoardController {
     }
 
     @PostMapping(value = "/form")
-    public String boardSave(BoardDto boardDto) {
-        System.out.println(boardDto);
+    public String boardSave(@Valid BoardDto boardDto, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "/pages/boards/boardForm";
+        }
         boardService.saveBoard(boardDto);
         return "redirect:/board/info";
+    }
+
+    @GetMapping(value = "/detail/{boardId}")
+    public String boardDetail(@PathVariable Long boardId, Model model) {
+        model.addAttribute("boardDto", boardService.showDetail(boardId));
+        return "/pages/boards/boardDetail";
     }
 }

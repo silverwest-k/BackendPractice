@@ -8,7 +8,11 @@
 >
 <th:block layout:fragment="script"></th:block>
 <script th:inline="javascript"></script>
-<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="css">
+  <style>
+    .fieldError {color: red}
+  </style>
+</th:block>
 <style th:inline="css"></style>
 
 <th:block layout:fragment="content">
@@ -42,11 +46,13 @@
                 <label>제목</label>
                 <input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요">
               </div>
+              <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
 
               <div class="form-group">
                 <label>내용</label>
                 <textarea class="form-control" th:field="*{content}" rows="3" placeholder="내용을 입력하세요"></textarea>
               </div>
+              <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"></p>
             </form>
           </div>
         </div>

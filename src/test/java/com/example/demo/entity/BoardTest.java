@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import com.example.demo.dto.BoradDto;
+import com.example.demo.dto.BoardDto;
 import com.example.demo.service.BoardService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,17 +19,17 @@ class BoardTest {
     @Autowired
     private BoardService boardService;
 
-    private BoradDto createBoardDto() {
-        BoradDto boradDto = new BoradDto();
-        boradDto.setTitle("test1");
-        boradDto.setWriter("me");
-        return boradDto;
+    private BoardDto createBoardDto() {
+        BoardDto boardDto = new BoardDto();
+        boardDto.setTitle("test1");
+        boardDto.setWriter("me");
+        return boardDto;
     }
 
     @Test
     @DisplayName("게시글 저장 테스트") // 선택사항(필수아님)
     public void saveTest() {
-        BoradDto boardDto = createBoardDto();
+        BoardDto boardDto = createBoardDto();
         Board savedBoard = boardService.saveBoard(boardDto);
 
         assertEquals(boardDto.getTitle(), savedBoard.getTitle());
