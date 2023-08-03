@@ -4,16 +4,53 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:="http://www.w3.org/1999/xhtml"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layouts/layout_common}"
->
-<th:block layout:fragment="script"></th:block>
-<script th:inline="javascript">
-    function deleteBoard() {
+        layout:decorate="~{layouts/layout_common}">
 
-    }
-</script>
-<th:block layout:fragment="css"></th:block>
-<style th:inline="css"></style>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function deleteBoard(obj) {
+            let id = obj.dataset.id;
+            let url = "/board/delete/" + id;
+        }
+        function updateBoard() {
+            $('#saveBtn').css('display', 'block');
+            $('#updateBtn').css('display', 'none');
+            $('.form-control').attr('disabled', false);
+        }
+        function saveBoard(obj) {
+            let id = obj.dataset.id;
+            let url = "/board/update";
+            let boardDto = {
+                id: id,
+                title: $('#title').val(),
+                content: $('#content').val()
+            }
+            $.ajax({
+                url: url,
+                type: 'PATCH',
+                data: JSON.stringify(boardDto),
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                cache: false,
+                success: function (){
+                    $('#saveBtn').css('display', 'none');
+                    $('#updateBtn').css('display', 'block');
+                    $('.form-control').attr('disabled', true);
+                },
+                error: function () {
+                }
+            })
+        }
+    </script>
+</th:block>
+
+<th:block layout:fragment="css">
+    <style th:inline="css">
+        .fieldError {
+            color: #9f1447;
+        }
+    </style>
+</th:block>
 
 <th:block layout:fragment="content">
     <div class="content-wrapper">
@@ -37,26 +74,27 @@
             <div class="card card-default">
                 <div class="card-header">
                     <h4 class="card-title">상세내용</h4>
-                    <button class="btn btn-outline-danger btn-sm float-right" type="button"
-                            onclick="deleteBoard"
-                    >
-                        삭제
-                    </button>
-                    <button class="btn btn-outline-warning btn-sm float-right" type="button">수정</button>
+                    <div class="btn-group  float-right">
+                        <button type="button" class="btn btn-outline-primary btn-sm">목록</button>
+                        <button id="saveBtn" type="button"
+                                class="btn btn-outline-success btn-sm"
+                                th:data-id="${boardDto.id}" style="display: none" onclick="saveBoard(this)"
+                        >저장</button>
+                        <button id="updateBtn" type="button" class="btn btn-outline-warning btn-sm" onclick="updateBoard()">수정</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" th:data-id="${boardDto.id}" onclick="deleteBoard(this)">삭제</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="container-fluid">
-                        <form id="boardForm" method="post" action="/board/form" th:object="${boardDto}">
                             <div class="form-group">
                                 <label>제목</label>
-                                <input type="text" th:value="*{title}" class="form-control" disabled />
+                                <input id="title" class="form-control" type="text" th:value="${boardDto.title}" disabled/>
                             </div>
 
                             <div class="form-group">
                                 <label>내용</label>
-                                <textarea class="form-control" th:text="*{content}" rows="3" disabled></textarea>
+                                <textarea id="content" class="form-control" th:text="${boardDto.content}" rows="10" disabled></textarea>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>

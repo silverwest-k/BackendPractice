@@ -6,8 +6,15 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layouts/layout_common}"
 >
-<th:block layout:fragment="script"></th:block>
-<script th:inline="javascript"></script>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function showDetail(obj) {
+            let id = $(obj).children().first().text();
+            let url = "/board/detail/" + id;
+            location.replace(url);
+        }
+    </script>
+</th:block>
 <th:block layout:fragment="css"></th:block>
 <style th:inline="css"></style>
 
@@ -49,7 +56,7 @@
                             </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                            <tr th:each="board : ${boards}">
+                            <tr th:each="board : ${boards}" onclick="showDetail(this)">
                                 <th scope="row" th:text="${board.id}"></th>
                                 <td th:text="${board.title}"></td>
                                 <td th:text="${board.writer}"></td>

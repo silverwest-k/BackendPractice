@@ -34,4 +34,16 @@ public class BoardService {
                 .orElseThrow(EntityExistsException::new);
         return BoardDto.of(board);
     }
+
+    public void deleteBoard(Long boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(EntityExistsException::new);
+        boardRepository.delete(board);
+    }
+
+    public void updateBoard(BoardDto boardDto) {
+        Board board = boardRepository.findById(boardDto.getId())
+                .orElseThrow(EntityExistsException::new);
+        board.updateBoard(boardDto);
+    }
 }

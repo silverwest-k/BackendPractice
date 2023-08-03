@@ -40,4 +40,8 @@ public class Board {
                 .writer(boardDto.getWriter())
                 .build();
     }
+    public void updateBoard(BoardDto boardDto) {
+        this.title = boardDto.getTitle();
+        this.content = boardDto.getContent();
+    }
 }
