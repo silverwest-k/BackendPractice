@@ -12,15 +12,11 @@
             let id = obj.dataset.id;
             let url = "/board/delete/" + id;
             $.ajax({
-                url: url,
+                url:url,
                 type: "DELETE",
                 cache: false,
-                success: function(data) {
+                success: function (data) {
                     location.replace("/board/info");
-                    history.pushState(null, null, location.href);
-                    window.onpopstate = function(event) {
-                        history.go(1);
-                    };
                 }
             })
         }

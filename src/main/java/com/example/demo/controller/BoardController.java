@@ -46,10 +46,10 @@ public class BoardController {
         return "/pages/boards/boardDetail";
     }
 
-    @GetMapping(value = "/delete/{boardId}")
-    public String boardDelete(@PathVariable Long boardId) {
+    @DeleteMapping(value = "/delete/{boardId}")
+    public ResponseEntity boardDelete(@PathVariable Long boardId) {
         boardService.deleteBoard(boardId);
-        return "redirect:/board/info";
+        return new ResponseEntity<Long>(boardId, HttpStatus.OK);
     }
 
     @PatchMapping(value = "/update")

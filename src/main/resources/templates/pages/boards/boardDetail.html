@@ -11,6 +11,14 @@
         function deleteBoard(obj) {
             let id = obj.dataset.id;
             let url = "/board/delete/" + id;
+            $.ajax({
+                url:url,
+                type: "DELETE",
+                cache: false,
+                success: function (data) {
+                    location.replace("/board/info");
+                }
+            })
         }
         function updateBoard() {
             $('#saveBtn').css('display', 'block');
