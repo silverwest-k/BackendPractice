@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.constant.Role;
+import com.example.demo.dto.MemberFormDto;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -12,13 +13,10 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 public class Member {
-    @Id
-    @Column(name = "member_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     private String name;
 
+    @Id
     private String email;
 
     private String password;
@@ -30,7 +28,7 @@ public class Member {
         return Member.builder()
                 .name(memberFormDto.getName())
                 .email(memberFormDto.getEmail())
-                .password(memberFormDto.getPassword())
+                .password(passwordEncoder.encode(memberFormDto.getPassword()))
                 .role(Role.USER)
                 .build();
     }
