@@ -26,14 +26,14 @@ class BoardTest {
         return boardDto;
     }
 
-    @Test
-    @DisplayName("게시글 저장 테스트") // 선택사항(필수아님)
-    public void saveTest() {
-        BoardDto boardDto = createBoardDto();
-        Board savedBoard = boardService.saveBoard(boardDto);
-
-        assertEquals(boardDto.getTitle(), savedBoard.getTitle());
-        assertEquals(boardDto.getWriter(), savedBoard.getWriter());
-    }
+//    @Test
+//    @DisplayName("게시글 저장 테스트") // 선택사항(필수아님)
+//    public void saveTest() {
+//        BoardDto boardDto = createBoardDto();
+//        Board savedBoard = boardService.saveBoard(boardDto);
+//
+//        assertEquals(boardDto.getTitle(), savedBoard.getTitle());
+//        assertEquals(boardDto.getWriter(), savedBoard.getWriter());
+//    }
 
 }

@@ -8,18 +8,19 @@
 >
 <th:block layout:fragment="script">
     <script th:inline="javascript">
-        $(function (){
+        $(function () {
             history.pushState(null, null, location.href)
-            window.onpopstate = function (event){
+            window.onpopstate = function (event) {
                 history.go(1)
             }
         })
+
         function showDetail(obj) {
             let id = $(obj).children().first().text();
             let url = "/board/detail/" + id;
             location.replace(url);
             history.pushState(null, null, location.href)
-            window.onpopstate = function (event){
+            window.onpopstate = function (event) {
                 history.go(1)
             }
         }
@@ -53,7 +54,8 @@
                     <button class="btn btn-outline-danger btn-sm float-right"
                             id="writeBoard"
                             onclick="location.href='/board/form'"
-                    >작성하기</button>
+                    >작성하기
+                    </button>
                 </div>
                 <div class="card-body">
                     <div class="container-fluid">
@@ -63,6 +65,7 @@
                                 <th scope="col">No</th>
                                 <th scope="col">제목</th>
                                 <th scope="col">작성자</th>
+                                <th scope="col">작성일</th>
                             </tr>
                             </thead>
                             <tbody class="table-group-divider">
@@ -70,15 +73,11 @@
                                 <th scope="row" th:text="${board.id}"></th>
                                 <td th:text="${board.title}"></td>
                                 <td th:text="${board.writer}"></td>
+<!--                                <td th:text="${board.regTime}"></td>-->
+                                <td th:text="${#temporals.format(board.regTime,'yyyy-MM-dd a HH:mm:ss')}"></td>
+
                             </tr>
                             </tbody>
-                            <tfoot>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">제목</th>
-                                <th scope="col">작성자</th>
-                            </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

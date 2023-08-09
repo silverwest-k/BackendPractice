@@ -4,6 +4,7 @@ import com.example.demo.entity.Board;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,6 +17,9 @@ public class BoardDto {
     @NotBlank(message = "😃 내용을 입력하세요.")
     private String content;
     private String writer;
+    private String memberEmail;
+    private LocalDateTime regTime;
+    private LocalDateTime updateTime;
 
     private static ModelMapper modelMapper = new ModelMapper();
 
