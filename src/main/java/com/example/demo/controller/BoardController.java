@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDto;
 import com.example.demo.service.BoardService;
+import com.example.demo.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 public class BoardController {
 
     private final BoardService boardService;
+    private final ReplyService replyService;
 
     @GetMapping(value = "/info")
     public String boardInfo(Model model) {
@@ -46,8 +48,17 @@ public class BoardController {
     }
 
     @GetMapping(value = "/detail/{boardId}")
-    public String boardDetail(@PathVariable Long boardId, Model model) {
-        model.addAttribute("boardDto", boardService.showDetail(boardId));
+    public String boardDetail(@PathVariable Long boardId, Model model, Authentication authentication) {
+        String userEmail = authentication.getName();
+        BoardDto boardDto = boardService.showDetail(boardId);
+        System.out.println(boardDto);
+        if(boardDto.getMemberEmail().equals(userEmail)){
+            model.addAttribute("mine", true);
+        } else {
+            model.addAttribute("mine", false);
+        }
+        model.addAttribute("boardDto", boardDto);
+        model.addAttribute("replies", replyService.getReplyList(boardId));
         return "/pages/boards/boardDetail";
     }
 
