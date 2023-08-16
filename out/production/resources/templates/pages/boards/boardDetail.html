@@ -116,7 +116,7 @@
             <div class="card card-default">
                 <div class="card-header">
                     <h4 class="card-title">상세내용</h4>
-                    <div class="btn-group float-right" th:if="${mine}">
+                    <div class="btn-group float-right" th:if="${#strings.equals(boardDto.memberEmail, userEmail)}">
                         <button id="updateBtn" type="button" class="btn btn-outline-warning btn-sm"
                                 onclick="updateBoard()"
                         >수정

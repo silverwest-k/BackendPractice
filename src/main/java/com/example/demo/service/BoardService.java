@@ -6,12 +6,13 @@ import com.example.demo.entity.Member;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Service
 @Transactional
@@ -26,12 +27,8 @@ public class BoardService {
         return boardRepository.save(Board.createBoard(boardDto, member));
     }
 
-    public List<BoardDto> getBoardList() {
-        List<BoardDto> boardDtos = new ArrayList<>();   // 앞에 제네릭 타입 명시 했으면 뒤에는 생략 가능
-        for(Board board : boardRepository.findAll()) {
-            boardDtos.add(BoardDto.of(board));
-        }
-        return boardDtos;
+    public Page<Board> getBoardList(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 
     public BoardDto showDetail(Long boardId) {
